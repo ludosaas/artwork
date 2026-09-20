@@ -66,12 +66,13 @@ deployed (next section) — the form, fields, and file output are identical.
 
 ## Before you push real content
 
-- Replace "Studio Name" in `src/layouts/Layout.astro` (site title, page
-  title template) and `src/pages/legal.astro`.
+- Site name (Claire Art) and artist name (Claire Taibi) are already set in
+  `src/layouts/Layout.astro` and `src/pages/about.astro`.
 - Replace the 6 sample entries in `src/content/artworks/` with real work,
   or edit them in place — same fields, real images in
   `public/images/artworks/`.
-- Set `STUDIO_EMAIL` in `src/pages/contact.astro` to the real inbox.
+- Set `STUDIO_EMAIL` in `src/pages/contact.astro` to the real inbox
+  (currently a placeholder: `hello@claire-art.example.com`).
 - Set `site:` in `astro.config.mjs` to the final domain.
 
 ## Push to GitHub
