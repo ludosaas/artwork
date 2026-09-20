@@ -5,4 +5,10 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: 'https://example.com',
   output: 'static',
+  // Bind dev/preview to 0.0.0.0 instead of just localhost, so the site is
+  // reachable from other devices on the same LAN (e.g. testing on a phone).
+  // Astro prints the LAN URL to use when the server starts.
+  server: {
+    host: true,
+  },
 });
