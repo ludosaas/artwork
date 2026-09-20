@@ -13,7 +13,7 @@ export async function getStaticPaths() {
     const prev = artworks[index - 1] ?? artworks[artworks.length - 1];
     const next = artworks[index + 1] ?? artworks[0];
     return {
-      params: { slug: artwork.slug },
+      params: { slug: artwork.id },
       props: { artwork, prev, next },
     };
   });
@@ -43,8 +43,8 @@ const { title, year, medium, dimensions, price, image, imageAlt, description } =
     </div>
 
     <nav class="artwork-nav" aria-label="More work">
-      <a href={`/artworks/${prev.slug}`}>&larr; {prev.data.title}</a>
-      <a href={`/artworks/${next.slug}`}>{next.data.title} &rarr;</a>
+      <a href={`/artworks/${prev.id}`}>&larr; {prev.data.title}</a>
+      <a href={`/artworks/${next.id}`}>{next.data.title} &rarr;</a>
     </nav>
   </div>
 
@@ -53,7 +53,7 @@ const { title, year, medium, dimensions, price, image, imageAlt, description } =
     <img src={image} alt={imageAlt || title} id="lightbox-img" />
   </div>
 
-  <script define:vars={{ prevSlug: prev.slug, nextSlug: next.slug }}>
+  <script define:vars={{ prevSlug: prev.id, nextSlug: next.id }}>
     const trigger = document.getElementById('artwork-image-trigger');
     const lightbox = document.getElementById('lightbox');
     const closeBtn = document.getElementById('lightbox-close');

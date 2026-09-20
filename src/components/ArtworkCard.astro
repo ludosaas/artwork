@@ -8,7 +8,7 @@ interface Props {
 const { artwork } = Astro.props;
 const { title, year, medium, image, imageAlt } = artwork.data;
 ---
-<a class="artwork-card" href={`/artworks/${artwork.slug}`}>
+<a class="artwork-card" href={`/artworks/${artwork.id}`}>
   <figure>
     <img src={image} alt={imageAlt || title} loading="lazy" />
   </figure>
