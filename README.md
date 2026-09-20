@@ -7,12 +7,15 @@ it's exactly the shape a git-based CMS form writes to, so wiring up owner
 self-editing later (see "Next step" below) is a small addition, not a
 rebuild.
 
-**Note on this build:** this sandbox's network policy currently blocks
-`registry.npmjs.org`, so `npm install` / `npm run build` could not be run or
-verified here. The code was written and manually checked (frontmatter
-schema, brace/tag balance, Astro conventions), but you should run `npm
-install && npm run dev` yourself as the first step to confirm it builds
-clean, before relying on it.
+**Note on this build:** this sandbox's network policy blocks
+`registry.npmjs.org`, so `npm install` / `npm run build` can't be run or
+verified from here — the code is written and reviewed by hand, but you are
+the first real build. Pinned to Astro 7 (`package.json` requires Node
+>=22.12.0, per Astro 7's requirement); the content collection already uses
+the Content Layer API (`src/content.config.ts` + `glob()` loader, `.id` not
+`.slug`) introduced in v5 and required from v6 onward, so no further
+migration should be needed there. If you hit a build error, paste it back
+and it'll get fixed directly — this is normal for a first run.
 
 ## What's included
 
