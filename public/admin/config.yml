@@ -8,7 +8,7 @@
 # section of the README.
 backend:
   name: github
-  repo: ludosaas/artwork
+  repo: ludosaas/artgallery
   branch: main
   # base_url: https://REPLACE_WITH_OAUTH_WORKER.workers.dev
 

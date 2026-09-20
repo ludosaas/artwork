@@ -78,14 +78,14 @@ deployed (next section) — the form, fields, and file output are identical.
 ## Push to GitHub
 
 ```bash
-git remote add origin https://github.com/ludosaas/REPLACE_WITH_REPO_NAME.git
+git remote add origin https://github.com/ludosaas/artgallery.git
 git branch -M main
 git push -u origin main
 ```
 
-Create the empty repo on GitHub first (ideally under the owner's account,
-not yours — see the ownership note from our conversation), then run the
-above from this project's folder.
+Run this from the project's folder, once the empty `artgallery` repo exists
+on GitHub (ideally under the owner's account, not yours — see the ownership
+note from our conversation).
 
 ## Deploy on Cloudflare Pages
 
@@ -102,7 +102,7 @@ above from this project's folder.
 ## Next step: connect the CMS (owner self-editing)
 
 The admin form itself is already in the repo (`public/admin/index.html` +
-`config.yml`, pointed at `ludosaas/artwork`) and works locally today — see
+`config.yml`, pointed at `ludosaas/artgallery`) and works locally today — see
 "Testing the admin locally" above. What's still missing is letting the
 *owner* log in from the live site, since GitHub's login flow needs a small
 server-side step a static site can't do on its own:
@@ -110,7 +110,7 @@ server-side step a static site can't do on its own:
 1. Deploy Sveltia CMS's ready-made OAuth Worker (a free Cloudflare Worker).
 2. Uncomment and fill in `base_url:` in `public/admin/config.yml` with that
    Worker's URL.
-3. Give the owner's GitHub account write access to the `ludosaas/artwork`
+3. Give the owner's GitHub account write access to the `ludosaas/artgallery`
    repo.
 
 Once that's done, the owner logs in at `yourdomain.com/admin` with their
