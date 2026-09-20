@@ -1,0 +1,38 @@
+# Sveltia/Decap CMS configuration — NOT YET ACTIVE.
+#
+# This file describes the editing form the site owner will use once the
+# CMS login is wired up (see README.md, "Next step: connect the CMS").
+# Until then, /admin has no working login and this file just documents the
+# intended shape of the form.
+#
+# backend:
+#   name: github
+#   repo: ludosaas/REPLACE_WITH_REPO_NAME
+#   branch: main
+#   base_url: https://REPLACE_WITH_OAUTH_WORKER.workers.dev
+
+media_folder: "public/images/artworks"
+public_folder: "/images/artworks"
+
+collections:
+  - name: "artworks"
+    label: "Artworks"
+    folder: "src/content/artworks"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: "title"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Year", name: "year", widget: "string" }
+      - { label: "Medium", name: "medium", widget: "string" }
+      - { label: "Dimensions", name: "dimensions", widget: "string", required: false }
+      - { label: "Price / availability", name: "price", widget: "string", required: false, hint: "e.g. '€450', 'Sold', or 'Inquire'" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Image alt text", name: "imageAlt", widget: "string", required: false }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Featured on homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Sort order", name: "order", widget: "number", required: false }
+      - { label: "Body (optional, not shown on site)", name: "body", widget: "markdown", required: false }

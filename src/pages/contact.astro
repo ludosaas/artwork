@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Contact" description="Get in touch about available work.">
+  <div class="wrap content-page">
+    <h1>Enquire</h1>
+    <p>
+      Interested in a piece, or want to know what's currently available?
+      Send a note below and it will open in your email client, addressed to
+      the studio.
+    </p>
+    <form id="contact-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Your email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required></textarea>
+
+      <button type="submit" class="enquire-btn">Send enquiry</button>
+    </form>
+  </div>
+
+  <script>
+    // NOTE for the site owner / webmaster: this opens the visitor's own
+    // email client with a pre-filled message — it works with zero backend,
+    // but depends on the visitor having a mail client configured. A more
+    // reliable upgrade for a commercial site is a form service such as
+    // Formspree or Web3Forms (free tiers available), which submits the
+    // form directly without leaving the page. See the README for notes.
+    const STUDIO_EMAIL = 'studio@example.com'; // replace with the real inbox
+
+    const form = document.getElementById('contact-form');
+    const params = new URLSearchParams(window.location.search);
+    const about = params.get('about');
+    if (about) {
+      const messageField = document.getElementById('message');
+      if (messageField instanceof HTMLTextAreaElement) {
+        messageField.value = `I'd like to ask about "${about}".\n\n`;
+      }
+    }
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form as HTMLFormElement);
+      const name = data.get('name');
+      const email = data.get('email');
+      const message = data.get('message');
+      const subject = encodeURIComponent(`Enquiry from ${name}`);
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+      window.location.href = `mailto:${STUDIO_EMAIL}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</Layout>

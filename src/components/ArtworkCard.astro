@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  artwork: CollectionEntry<'artworks'>;
+}
+
+const { artwork } = Astro.props;
+const { title, year, medium, image, imageAlt } = artwork.data;
+---
+<a class="artwork-card" href={`/artworks/${artwork.slug}`}>
+  <figure>
+    <img src={image} alt={imageAlt || title} loading="lazy" />
+  </figure>
+  <div class="card-title">{title}</div>
+  <div class="card-meta">{year} &middot; {medium}</div>
+</a>

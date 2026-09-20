@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ArtworkCard from '../components/ArtworkCard.astro';
+
+const artworks = (await getCollection('artworks')).sort((a, b) => {
+  const orderA = a.data.order ?? 999;
+  const orderB = b.data.order ?? 999;
+  return orderA - orderB;
+});
+---
+<Layout title="Home" description="A collection of original paintings and works on paper.">
+  <div class="wrap">
+    <div class="gallery-intro">
+      <h1>Original works, made by hand.</h1>
+      <p>
+        A rotating collection of paintings and works on paper. Each piece is
+        available to view in person by appointment, or to enquire about
+        directly below.
+      </p>
+    </div>
+    <div class="gallery-grid">
+      {artworks.map((artwork) => <ArtworkCard artwork={artwork} />)}
+    </div>
+  </div>
+</Layout>

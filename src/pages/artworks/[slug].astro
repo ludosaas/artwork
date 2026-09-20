@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const artworks = (await getCollection('artworks')).sort((a, b) => {
+    const orderA = a.data.order ?? 999;
+    const orderB = b.data.order ?? 999;
+    return orderA - orderB;
+  });
+
+  return artworks.map((artwork, index) => {
+    const prev = artworks[index - 1] ?? artworks[artworks.length - 1];
+    const next = artworks[index + 1] ?? artworks[0];
+    return {
+      params: { slug: artwork.slug },
+      props: { artwork, prev, next },
+    };
+  });
+}
+
+const { artwork, prev, next } = Astro.props;
+const { title, year, medium, dimensions, price, image, imageAlt, description } = artwork.data;
+---
+<Layout title={title} description={description}>
+  <div class="wrap artwork-detail">
+    <a class="back-link" href="/">&larr; All work</a>
+    <div class="artwork-layout">
+      <div class="artwork-image" id="artwork-image-trigger">
+        <img src={image} alt={imageAlt || title} />
+      </div>
+      <div class="artwork-info">
+        <h1>{title}</h1>
+        <ul class="artwork-meta">
+          <li><span class="label">Year</span><span>{year}</span></li>
+          <li><span class="label">Medium</span><span>{medium}</span></li>
+          {dimensions && <li><span class="label">Dimensions</span><span>{dimensions}</span></li>}
+          {price && <li><span class="label">Availability</span><span>{price}</span></li>}
+        </ul>
+        <p class="artwork-description">{description}</p>
+        <a class="enquire-btn" href={`/contact?about=${encodeURIComponent(title)}`}>Enquire about this piece</a>
+      </div>
+    </div>
+
+    <nav class="artwork-nav" aria-label="More work">
+      <a href={`/artworks/${prev.slug}`}>&larr; {prev.data.title}</a>
+      <a href={`/artworks/${next.slug}`}>{next.data.title} &rarr;</a>
+    </nav>
+  </div>
+
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close image">&times;</button>
+    <img src={image} alt={imageAlt || title} id="lightbox-img" />
+  </div>
+
+  <script define:vars={{ prevSlug: prev.slug, nextSlug: next.slug }}>
+    const trigger = document.getElementById('artwork-image-trigger');
+    const lightbox = document.getElementById('lightbox');
+    const closeBtn = document.getElementById('lightbox-close');
+
+    function openLightbox() {
+      lightbox?.classList.add('open');
+    }
+    function closeLightbox() {
+      lightbox?.classList.remove('open');
+    }
+
+    trigger?.addEventListener('click', openLightbox);
+    closeBtn?.addEventListener('click', closeLightbox);
+    lightbox?.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeLightbox();
+        return;
+      }
+      // Don't hijack arrow keys while the lightbox is open or focus is in a form field.
+      const active = document.activeElement;
+      const isFormField = active && ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName);
+      if (lightbox?.classList.contains('open') || isFormField) return;
+
+      if (e.key === 'ArrowRight') {
+        window.location.href = `/artworks/${nextSlug}`;
+      } else if (e.key === 'ArrowLeft') {
+        window.location.href = `/artworks/${prevSlug}`;
+      }
+    });
+  </script>
+</Layout>
