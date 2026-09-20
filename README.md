@@ -26,8 +26,9 @@ and it'll get fixed directly — this is normal for a first run.
   notice / privacy page
 - 6 sample artworks with generated placeholder images, so you can see the
   design before adding real work
-- `public/admin/config.yml` — the intended editing form for a future
-  git-based CMS (Decap/Sveltia). It is **not active yet**; see below.
+- `public/admin/` — Sveltia CMS, set up so you can test the editing form
+  locally right now (see below). Publishing from the *live* site still
+  needs one more piece (an OAuth login Worker) — see "Next step" below.
 
 ## Local setup
 
@@ -37,6 +38,31 @@ npm run dev       # http://localhost:4321
 npm run build     # outputs to dist/
 npm run preview   # serve the production build locally
 ```
+
+## Testing the admin locally
+
+Sveltia CMS (the `/admin` form) can be tried out right now, against your
+own local copy of this repo, with no GitHub login and no deployment at all:
+
+1. Use a Chromium-based browser — **Chrome, Edge, or Brave**. This relies on
+   the File System Access API, which Firefox and Safari don't support.
+2. Make sure this folder is a git repo (it already is, if you unzipped the
+   project I sent — `git status` should work).
+3. Run the dev server: `npm run dev`.
+4. Open `http://localhost:4321/admin/index.html`.
+5. Click **Work with Local Repository** and, when the browser asks, select
+   this project's root folder (the one containing `.git`).
+6. You'll see the "Artworks" collection with the same 6 sample entries,
+   editable through the form defined in `public/admin/config.yml`. Add,
+   edit, or delete one — it writes straight to the Markdown files in
+   `src/content/artworks/` on disk.
+7. Refresh `http://localhost:4321/` (or check `git status` in another
+   terminal) to see the change land. Nothing is committed automatically —
+   review and `git commit` the change yourself, same as any other edit.
+
+This is genuinely how the owner will work later too, just swapped from
+"pick a local folder" to "log in with GitHub" once the OAuth Worker is
+deployed (next section) — the form, fields, and file output are identical.
 
 ## Before you push real content
 
@@ -74,21 +100,21 @@ above from this project's folder.
 
 ## Next step: connect the CMS (owner self-editing)
 
-Not done in this iteration — the site works standalone, but adding an
-artwork still means editing a Markdown file and pushing. To give the owner
-a real `/admin` form:
+The admin form itself is already in the repo (`public/admin/index.html` +
+`config.yml`, pointed at `ludosaas/artwork`) and works locally today — see
+"Testing the admin locally" above. What's still missing is letting the
+*owner* log in from the live site, since GitHub's login flow needs a small
+server-side step a static site can't do on its own:
 
-1. Pick Decap CMS or Sveltia CMS (Sveltia is a faster, actively developed
-   drop-in for Decap; either reads `public/admin/config.yml`).
-2. Deploy the small OAuth login Worker (Sveltia has a ready-made one) so
-   GitHub login works without Netlify. Fill in the `backend:` block at the
-   top of `public/admin/config.yml` with the real repo and Worker URL.
-3. Add `public/admin/index.html` per that CMS's install instructions.
-4. Give the owner's GitHub account write access to the repo.
+1. Deploy Sveltia CMS's ready-made OAuth Worker (a free Cloudflare Worker).
+2. Uncomment and fill in `base_url:` in `public/admin/config.yml` with that
+   Worker's URL.
+3. Give the owner's GitHub account write access to the `ludosaas/artwork`
+   repo.
 
-Once that's wired up, the owner logs in at `yourdomain.com/admin`, fills
-in the same fields as the sample files above, and publishing an artwork is
-a form submission — no code, no GitHub knowledge needed day-to-day.
+Once that's done, the owner logs in at `yourdomain.com/admin` with their
+GitHub account instead of picking a local folder — same form, same fields,
+same files — and publishing an artwork becomes a form submission.
 
 ## Known placeholders to swap out later
 
