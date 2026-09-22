@@ -78,12 +78,12 @@ deployed (next section) — the form, fields, and file output are identical.
 ## Push to GitHub
 
 ```bash
-git remote add origin https://github.com/ludosaas/artgallery.git
-git branch -M main
-git push -u origin main
+git remote add origin https://github.com/ludosaas/artwork.git
+git branch -M master
+git push -u origin master
 ```
 
-Run this from the project's folder, once the empty `artgallery` repo exists
+Run this from the project's folder, once the empty `artwork` repo exists
 on GitHub (ideally under the owner's account, not yours — see the ownership
 note from our conversation).
 
@@ -94,7 +94,7 @@ note from our conversation).
 2. Framework preset: **Astro** (build command `npm run build`, output
    directory `dist`). Add an environment variable `NODE_VERSION` (e.g. `20`)
    if the dashboard doesn't detect it.
-3. Deploy. Every push to `main` will rebuild and redeploy automatically.
+3. Deploy. Every push to `master` will rebuild and redeploy automatically.
 4. **Custom domain:** in the Pages project → **Custom domains**, add both
    the bare domain and `www`, and set one to redirect to the other so
    there's a single canonical address.
@@ -102,7 +102,7 @@ note from our conversation).
 ## Next step: connect the CMS (owner self-editing)
 
 The admin form itself is already in the repo (`public/admin/index.html` +
-`config.yml`, pointed at `ludosaas/artgallery`) and works locally today — see
+`config.yml`, pointed at `ludosaas/artwork`) and works locally today — see
 "Testing the admin locally" above. What's still missing is letting the
 *owner* log in from the live site, since GitHub's login flow needs a small
 server-side step a static site can't do on its own:
@@ -110,7 +110,7 @@ server-side step a static site can't do on its own:
 1. Deploy Sveltia CMS's ready-made OAuth Worker (a free Cloudflare Worker).
 2. Uncomment and fill in `base_url:` in `public/admin/config.yml` with that
    Worker's URL.
-3. Give the owner's GitHub account write access to the `ludosaas/artgallery`
+3. Give the owner's GitHub account write access to the `ludosaas/artwork`
    repo.
 
 Once that's done, the owner logs in at `yourdomain.com/admin` with their
