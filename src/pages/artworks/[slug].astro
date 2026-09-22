@@ -27,7 +27,9 @@ const { title, year, medium, dimensions, price, image, imageAlt, description } =
     <a class="back-link" href="/">&larr; All work</a>
     <div class="artwork-layout">
       <div class="artwork-image" id="artwork-image-trigger">
-        <img src={image} alt={imageAlt || title} />
+        <div class="frame-inner">
+          <img src={image} alt={imageAlt || title} />
+        </div>
       </div>
       <div class="artwork-info">
         <h1>{title}</h1>
