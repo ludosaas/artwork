@@ -1,5 +1,5 @@
 ---
-title: Coucou CB
+title: Coucou
 year: '2026'
 medium: photo
 dimensions: 80x80
