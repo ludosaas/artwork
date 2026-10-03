@@ -10,7 +10,6 @@ backend:
   name: github
   repo: ludosaas/artwork
   branch: master
-  base_url: https://sveltia-cms-auth.ludovic-saas.workers.dev
 
 media_folder: "public/images/artworks"
 public_folder: "/images/artworks"
